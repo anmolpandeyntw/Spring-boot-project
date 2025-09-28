@@ -16,7 +16,7 @@ public class CategoryMapper  {
         categoryDTO.setId(category.getId());
         categoryDTO.setName(category.getName());
         categoryDTO.setProducts(category.getProducts().stream()
-                .map(ProductMapper::toproductDTO).toList());// yeha toProductDTO hona chiya per error a rha hai
+                .map(ProductMapper::toProductDTO).toList());// yeha toProductDTO hona chiya per error a rha hai
 
 return categoryDTO;
     }

@@ -7,6 +7,8 @@ import com.Firstspring.product.repository.CategoryRepository;
 import lombok.AllArgsConstructor; // <--- Add this import for Lombok
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor // <--- Add this annotation here
 public class CategoryService {
@@ -24,6 +26,21 @@ public class CategoryService {
     }
 
     // get all category
+    public List<CategoryDTO> getAllCategories(){
+        return categoryRepository.findAll().stream().map(CategoryMapper::toCategoryDTO).toList();
+    }
+
     // get category by id
+    public CategoryDTO getCategoryById(Long id){
+        Category category= categoryRepository.findById(id).orElseThrow(()->new RuntimeException("Category not found Anmol!"));
+return CategoryMapper.toCategoryDTO(category);
+    }
     // delete category
+public String deleteCategory(Long id){
+        categoryRepository.deleteById(id);
+        return "Category" + id + " has been deleted Anmol!";
+
+}
+
+
 }
