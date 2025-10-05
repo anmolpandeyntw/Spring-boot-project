@@ -1,5 +1,6 @@
 package com.Firstspring.product.service;
 
+import com.Firstspring.product.Exception.CategoryAlreadyExistsException;
 import com.Firstspring.product.dto.CategoryDTO;
 import com.Firstspring.product.entity.Category;
 import com.Firstspring.product.mapper.CategoryMapper;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor; // <--- Add this import for Lombok
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor // <--- Add this annotation here
@@ -20,6 +22,11 @@ public class CategoryService {
 
     // create category
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        Optional<Category> optionalCategory= categoryRepository.findByName(categoryDTO.getName());
+       if(optionalCategory.isPresent()){
+           throw new CategoryAlreadyExistsException("Category "
+                   + categoryDTO.getName() +" already exists Anmol!");
+       }
         Category category = CategoryMapper.toCategoryEntity(categoryDTO);
         category = categoryRepository.save(category);
         return CategoryMapper.toCategoryDTO(category);

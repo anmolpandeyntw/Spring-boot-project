@@ -1,5 +1,6 @@
 package com.Firstspring.product.service;
 
+import com.Firstspring.product.Exception.CategoryNotFoundException;
 import com.Firstspring.product.dto.ProductDTO;
 import com.Firstspring.product.entity.Category;
 import com.Firstspring.product.entity.Product;
@@ -28,7 +29,9 @@ public ProductDTO createProduct (ProductDTO productDTO){
      *name , descrpiton,price ,categoryId
      *
      * **/
-    Category category=categoryRepository.findById(productDTO.getCategoryId()).orElseThrow(()->new RuntimeException("Category not found!"));
+    Category category=categoryRepository.findById(productDTO.getCategoryId())
+            .orElseThrow(()->new CategoryNotFoundException
+                    ("Category id " +productDTO.getCategoryId()+" not found Anmol!"));
     // DTO => entity
      Product product=ProductMapper.toProductEntity(productDTO,category);
      product=productRepository.save(product);
